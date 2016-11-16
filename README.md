@@ -17,7 +17,7 @@ make build
 docker run --rm -p 8080
     -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-    prom-sqs-stats:latest
+    wmgaca/prom-sqs-stats:latest
         -name ${AMAZON_SQS_NAME}
         -account ${AWS_ACCOUNT_NUMBER}
         -region ${AWS_REGION}
@@ -29,8 +29,27 @@ Example:
 docker run --rm -p 8080
     -e AWS_ACCESS_KEY_ID=AKAIZMCOZBQSMTQOLKXJ
     -e AWS_SECRET_ACCESS_KEY=ssywWrhtN6T9rCJMPiEAl1aNfw2WZCrKiPzyj0Mp
-    prom-sqs-stats:latest
+    wmgaca/prom-sqs-stats:latest
         -name gacgacgac-replicattion
         -account 123456789012
         -region eu-central-1
+```
+
+Aaaaand now:
+
+```bash
+~ docker ps
+CONTAINER ID        IMAGE                          COMMAND                  CREATED             STATUS              PORTS                     NAMES
+a9a4f242c005        wmgaca/prom-sqs-stats:latest   "/app/main -name wmga"   7 seconds ago       Up 5 seconds        0.0.0.0:32775->8080/tcp   romantic_borg
+
+~ curl -Ss localhost:32755/metrics | grep sqs
+# HELP sqs_approx_messages Approximate number of messages in an SQS queue.
+# TYPE sqs_approx_messages gauge
+sqs_approx_messages{sqs_queue_name="wmgaca-repl-fra"} 0
+# HELP sqs_approx_messages_delayed Approximate number of delayed messages in an SQS queue.
+# TYPE sqs_approx_messages_delayed gauge
+sqs_approx_messages_delayed{sqs_queue_name="wmgaca-repl-fra"} 0
+# HELP sqs_approx_messages_not_visible Approximate number of not visible messages in an SQS queue.
+# TYPE sqs_approx_messages_not_visible gauge
+sqs_approx_messages_not_visible{sqs_queue_name="wmgaca-repl-fra"} 0
 ```
