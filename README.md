@@ -5,18 +5,19 @@ A tiny service exposing some Amazon SQS metrics in Prometheus format.
 go build .
 ```
 
-## Build it
-To build a Docker image:
+## Usage
+
+### Build it
 
 ```bash
 make build
 ```
 
-## Run it
+### Run it
 ```bash
 docker run --rm -p 8080
-    -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-    -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+    -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
     wmgaca/prom-sqs-stats:latest
         -name ${AMAZON_SQS_NAME}
         -account ${AWS_ACCOUNT_NUMBER}
@@ -30,18 +31,15 @@ docker run --rm -p 8080
     -e AWS_ACCESS_KEY_ID=AKAIZMCOZBQSMTQOLKXJ
     -e AWS_SECRET_ACCESS_KEY=ssywWrhtN6T9rCJMPiEAl1aNfw2WZCrKiPzyj0Mp
     wmgaca/prom-sqs-stats:latest
-        -name gacgacgac-replicattion
+        -name wmgaca-repl-fra
         -account 123456789012
         -region eu-central-1
 ```
 
-Aaaaand now:
+### Query the metrics
+Metrics are available under the `/metrics` endpoint:
 
 ```bash
-~ docker ps
-CONTAINER ID        IMAGE                          COMMAND                  CREATED             STATUS              PORTS                     NAMES
-a9a4f242c005        wmgaca/prom-sqs-stats:latest   "/app/main -name wmga"   7 seconds ago       Up 5 seconds        0.0.0.0:32775->8080/tcp   romantic_borg
-
 ~ curl -Ss localhost:32755/metrics | grep sqs
 # HELP sqs_approx_messages Approximate number of messages in an SQS queue.
 # TYPE sqs_approx_messages gauge
