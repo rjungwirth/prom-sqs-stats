@@ -1,11 +1,13 @@
 # prom-sqs-stats
 A tiny service exposing some Amazon SQS metrics in Prometheus format.
 
-```bash
-go build .
-```
-
 ## Usage
+
+If you feel like building it on your machine:
+
+```bash
+go build && prom-sqs-stats -h
+```
 
 ### Build it
 
