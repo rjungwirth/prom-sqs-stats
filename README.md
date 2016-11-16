@@ -1,7 +1,9 @@
 # prom-sqs-stats
 A tiny service exposing some Amazon SQS metrics in Prometheus format.
 
-```go build . -o
+```bash
+go build .
+```
 
 ## Build it
 To build a Docker image:
