@@ -60,16 +60,14 @@ func init() {
 
 // Query SQS and update metrics
 func queryAndUpdate(conn *sqs.SQS, queueUrl string, labels prometheus.Labels) error {
-	params := &sqs.GetQueueAttributesInput{
+	resp, err := conn.GetQueueAttributes(&sqs.GetQueueAttributesInput{
 		QueueUrl: aws.String(queueUrl),
 		AttributeNames: []*string{
 			aws.String("ApproximateNumberOfMessages"),
 			aws.String("ApproximateNumberOfMessagesNotVisible"),
 			aws.String("ApproximateNumberOfMessagesDelayed"),
 		},
-	}
-
-	resp, err := conn.GetQueueAttributes(params)
+	})
 	if err != nil {
 		return err
 	}
